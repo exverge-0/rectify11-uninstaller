@@ -1,0 +1,12 @@
+[package]
+name = "rectify-uninstaller-rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+registry = "1.2.3"
+utfx = "0.1.0"
+
+[build-dependencies]
+winres = "0.1.12"
+is_elevated = "0.1.2"

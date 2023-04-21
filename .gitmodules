@@ -1,0 +1,3 @@
+[submodule "Rectify11.Phase2/Rectify11Installer"]
+	path = Rectify11.Phase2/Rectify11Installer
+	url = https://github.com/MishaTY/Rectify11Installer.git

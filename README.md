@@ -1,2 +1,2 @@
 # rectify-uninstaller
-Unofficial uninstaller for Rectify11 written in Rustñ
+Unofficial uninstaller for Rectify11 written in Rust

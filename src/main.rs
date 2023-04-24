@@ -31,15 +31,20 @@ fn main() {
     for x in pending_files_x86 {
         uninstall_files.push(x);
     }
+    println!("Changing theme to default");
+    command("cmd", "/c start "" "C:\Windows\Resources\Themes\aero.theme", temp().as_path());
     rectify_key.set_value("UninstallFiles", &Data::MultiString(uninstall_files)).expect_pause("Failed to write to UninstallFiles registry");
     let phase2_path = format!("{}/Rectify11.Phase2.exe", var("TEMP").expect_pause("Failed to read TEMP environment variable"));
     let mut phase2 = OpenOptions::new().write(true).create(true).truncate(true).open(PathBuf::from(phase2_path.clone())).unwrap();
     phase2.write_all(include_bytes!("Rectify11.Phase2.exe")).unwrap();
     phase2.flush().unwrap();
     drop(phase2); // force drop so that it's no longer "being used by another (same) process"
+    println!("Removing patched files...");
     command(phase2_path.as_str(), "/uninstall", temp().as_path()).exit_ok().expect_pause("Rectify11.Phase2.exe failed to execute.");
-    rectify_key.set_value("IsInstalled", &Data::U32(0)).expect_pause("Failed to set Rectify11 IsInstalled registry key");
+    println!("Finished removing patched files!");
     command("sfc", "/scannow", temp().as_path()); // sfc /scannow to undo non-patched like sounds
+    rectify_key.set_value("IsInstalled", &Data::U32(0)).expect_pause("Failed to set Rectify11 IsInstalled registry key");
+    println!("Removing the remainder of Rectify11 (your shell will close during this process)");
     kill_all();
     delete_tasks();
     del_dir("MicaForEveryone");
@@ -51,6 +56,7 @@ fn main() {
         _ => {}
     };
     println!("Successfully uninstalled Rectify11.");
+    println!("Continue to restart your computer.");
     pause();
     command("shutdown.exe", "-r -t 0", temp().as_path());
 }

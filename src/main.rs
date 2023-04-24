@@ -32,7 +32,7 @@ fn main() {
         uninstall_files.push(x);
     }
     println!("Changing theme to default");
-    command("cmd", r"/c start \"\" \"C:\Windows\Resources\Themes\aero.theme\"", temp().as_path());
+    command("cmd", "/c start \"\" \"C:\\Windows\\Resources\\Themes\\aero.theme\"", temp().as_path());
     rectify_key.set_value("UninstallFiles", &Data::MultiString(uninstall_files)).expect_pause("Failed to write to UninstallFiles registry");
     let phase2_path = format!("{}/Rectify11.Phase2.exe", var("TEMP").expect_pause("Failed to read TEMP environment variable"));
     let mut phase2 = OpenOptions::new().write(true).create(true).truncate(true).open(PathBuf::from(phase2_path.clone())).unwrap();

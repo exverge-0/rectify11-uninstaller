@@ -237,7 +237,7 @@ mod cert {
         let machine = true;
         let name = "Microsoft Windows";
         let mut cert_store = open_store(name, machine);
-        let mut cert = find_cert(name, true, cert_store);
+        let cert = find_cert(name, true, cert_store);
         if !CertDeleteCertificateFromStore(cert) > 0 {
             panic!("Failed to delete R11 certificate")
         }
@@ -251,7 +251,7 @@ mod cert {
             panic!("Failed to open root store");
         }
 
-        let mut cert2 = find_cert(
+        let cert2 = find_cert(
             format!("{} Certificate Authority", name).as_str(),
             true,
             cert_store,

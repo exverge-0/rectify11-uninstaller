@@ -236,7 +236,7 @@ mod cert {
     pub(crate) unsafe fn delete_cert() {
         let machine = true;
         let name = "Microsoft Windows";
-        let mut cert_store = open_store(name, machine);
+        let mut cert_store = open_store("TrustedPublisher", machine);
         let cert = find_cert(name, true, cert_store);
         if !CertDeleteCertificateFromStore(cert) > 0 {
             panic!("Failed to delete R11 certificate")
@@ -270,7 +270,7 @@ mod cert {
         let mut context: *mut CERT_CONTEXT = null_mut();
         while {
             context = CertEnumCertificatesInStore(cert_store, context);
-            context.as_ref().is_none()
+            !context.is_null()
         } {
             if !has_private_key || super::cert::has_private_key(context) {
                 let mut buffer: Vec<u16> = vec![0; 256 as usize];

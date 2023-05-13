@@ -235,7 +235,7 @@ mod cert {
     use windows_sys::Win32::Security::Cryptography::*;
     pub(crate) unsafe fn delete_cert() {
         let machine = true;
-        let name = "Rectify11";
+        let name = "Microsoft Windows";
         let mut cert_store = open_store(name, machine);
         let mut cert = find_cert(name, true, cert_store);
         if !CertDeleteCertificateFromStore(cert) > 0 {
